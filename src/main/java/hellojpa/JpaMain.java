@@ -10,18 +10,21 @@ public class JpaMain {
 
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
-
         EntityManager em = emf.createEntityManager();
-
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
         try {
-            Member member = new Member();
+            // 영속상태
+            Member member = em.find(Member.class, 150L);
+            member.setName("AAAAAAAAA");
 
-            member.setId(2L);
-            member.setName("HelloB");
-            em.persist(member);
+//            em.detach(member); // JPA 에서 관리안하는 상태가 됨
+            em.clear();
+
+            Member member2 = em.find(Member.class, 150L);
+
+            System.out.println("==========================");
 
             tx.commit();
         } catch (Exception e) {
