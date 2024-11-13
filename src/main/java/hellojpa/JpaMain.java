@@ -15,16 +15,12 @@ public class JpaMain {
         tx.begin();
 
         try {
-            // 영속상태
-            Member member = em.find(Member.class, 150L);
-            member.setName("AAAAAAAAA");
 
-//            em.detach(member); // JPA 에서 관리안하는 상태가 됨
-            em.clear();
+            Member member = new Member();
+            member.setId("ID_A");
+            member.setUsername("A");
 
-            Member member2 = em.find(Member.class, 150L);
-
-            System.out.println("==========================");
+            em.persist(member);
 
             tx.commit();
         } catch (Exception e) {
